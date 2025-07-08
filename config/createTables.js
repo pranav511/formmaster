@@ -13,29 +13,31 @@ async function createTables() {
 
     // Create states table
     await db.query(`
-      CREATE TABLE IF NOT EXISTS states (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
-        countryId INT NOT NULL,
-        FOREIGN KEY (countryId) REFERENCES countries(id) ON DELETE CASCADE
-      )
+        CREATE TABLE IF NOT EXISTS states (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          name VARCHAR(100) NOT NULL,
+          countryId INT NOT NULL,
+          FOREIGN KEY (countryId) REFERENCES countries(id) ON DELETE CASCADE
+        )
     `);
 
     // Create users table
     await db.query(`
       CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
-        gender ENUM('Male','Female') NOT NULL,
-        department VARCHAR(100) NOT NULL,
-        countryId INT NOT NULL,
-        stateId INT NOT NULL,
-        address VARCHAR(255),
-        profileImage VARCHAR(255),
-        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (countryId) REFERENCES countries(id) ON DELETE CASCADE,
-        FOREIGN KEY (stateId) REFERENCES states(id) ON DELETE CASCADE
-      )
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  gender ENUM('Male','Female') NOT NULL,
+  department VARCHAR(100) NOT NULL,
+  countryId INT NOT NULL,
+  stateId INT NOT NULL,
+  address VARCHAR(255),
+  profileImage VARCHAR(255),
+  password VARCHAR(255),
+  role ENUM('admin', 'user') DEFAULT 'user',
+  FOREIGN KEY (countryId) REFERENCES countries(id) ON DELETE CASCADE,
+  FOREIGN KEY (stateId) REFERENCES states(id) ON DELETE CASCADE
+);
+
     `);
 
     console.log('All tables created successfully!');
